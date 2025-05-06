@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+    <ThingDef ParentName="CowboyHat">
+
+        <defName>Example_Apparel_CowboyHat</defName>
+        <label>example cowboy hat</label>
+        <description>Stylish yet rugged, this hat is an example of CGOI.</description>
+        <possessionCount>1</possessionCount>
+
+        <colorGenerator Class="CGOI.ColorGenerator_OptionsInterpolated">
+            <options>
+                <li>
+                    <weight>10</weight>
+
+                    <!-- Only using "min" and "max", functions the same as vanilla. -->
+                    <!-- Each channel picks a random value between min and max individually. -->
+                    <min>(0.3,0.3,0.3)</min>
+                    <max>(0.5,0.5,0.5)</max>
+                </li>
+                <li>
+                    <weight>10</weight>
+
+                    <!-- Only using "a" and "b", picks a color randomly between a and b. -->
+                    <a>(1, 0, 0, 1)</a>
+                    <b>(0, 0, 1, 1)</b>
+                </li>
+                <li>
+                    <weight>10</weight>
+
+                    <!-- Using both min/max and a/b, first a color randomly between a and b is picked, -->
+                    <!-- then min/max is used as a random offset applied to each channel individually. -->
+                    <a>(0, 1, 0, 1)</a>
+                    <b>(0, 0, 1, 1)</b>
+                    <min>(-0.1, -0.1, -0.1, 0)</min>
+                    <max>(0.1, 0.1, 0.1, 0)</max>
+                    <!-- Negative values are perfectly acceptable. The output color will be clamped to -->
+                    <!-- (0,0,0,0) and (1,1,1,1) -->
+                </li>
+                <li>
+                    <weight>10</weight>
+
+                    <a>(0, 1, 1, 1)</a>
+                    <b>(1, 0, 1, 1)</b>
+
+                    <!-- Method of interpolation can be specified. Currently only two options: -->
+                    <!-- - Linear (default) -->
+                    <!-- - SquareRoot -->
+                    <interpolation>SquareRoot</interpolation>
+
+                    <!-- SquareRoot is intended to compensate for gamma correction. -->
+                    <!-- Linear works best for darker colors closer to red, blue, green, while -->
+                    <!-- SquareRoot works best for brighter colors closer to cyan, yellow, magenta. -->
+                </li>
+                <li>
+                    <weight>10</weight>
+
+                    <a>(0, 1, 1, 0)</a>
+                    <b>(1, 1, 0, 1)</b>
+                    <interpolation>SquareRoot</interpolation>
+
+                    <!-- If using SquareRoot, you can also specify if it should also apply to the alpha channel. -->
+                    <!-- default is false -->
+                    <squareRootAlpha>true</squareRootAlpha>
+                </li>
+                <li>
+                    <weight>10</weight>
+
+                    <!-- Finally, "only" functions the exact same as vanilla. -->
+                    <only>(0.259, 0.016, 0.125, 1)</only>
+
+                    <!-- Notice that, if only using only/min/max, then this generator will function the same as vanilla. -->
+                    <!-- This generator can substitute the vanilla one without issue. -->
+                </li>
+            </options>
+        </colorGenerator>
+
+    </ThingDef>
+</Defs>

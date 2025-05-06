@@ -3,7 +3,7 @@
 
     <packageId>DogLuggage.ColorGeneratorOptionsInterpolated</packageId>
 
-	<name>ColorGenerator_OptionsInterpolated</name>
+	<name>Color Generator: Options Interpolated</name>
 	<author>DogLuggage</author>
 	
     <modVersion IgnoreIfNoMatchingField="True">0.1</modVersion>
@@ -14,6 +14,6 @@
 	
     <modDependencies></modDependencies>
 
-    <description>TODO</description>
+    <description>Adds color generator "CGOI.ColorGenerator_OptionsInterpolated". Similar to the vanilla "ColorGenerator_Options", but able to generate colors linearly interpolated between pairs of colors.</description>
 	
 </ModMetaData>
