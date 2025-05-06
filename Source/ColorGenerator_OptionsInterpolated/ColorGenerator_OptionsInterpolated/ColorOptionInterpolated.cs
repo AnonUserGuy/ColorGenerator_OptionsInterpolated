@@ -14,7 +14,7 @@ namespace CGOI
 
         public Color a = new Color(0f, 0f, 0f, 0f);
         public Color b = new Color(0f, 0f, 0f, 0f);
-        public ColorInterpolationType interpolation = ColorInterpolationType.SquareRoot;
+        public ColorInterpolationType interpolation = ColorInterpolationType.Linear;
         public bool squareRootAlpha = false;
 
         public Color RandomizedColor()
@@ -25,13 +25,17 @@ namespace CGOI
             }
 
             Color offset = new Color(Rand.Range(min.r, max.r), Rand.Range(min.g, max.g), Rand.Range(min.b, max.b), Rand.Range(min.a, max.a));
+            Color res;
             switch (interpolation)
             {
                 case ColorInterpolationType.Linear:
-                    return Color.Lerp(min, max, Rand.Range(0f, 1f)) + offset;
+                    res = Color.Lerp(a, b, Rand.Range(0f, 1f)) + offset;
+                    break;
                 default: // SquareRoot
-                    return GetSquareRootInterpolated(Rand.Range(0f, 1f)) + offset;
+                    res = GetSquareRootInterpolated(Rand.Range(0f, 1f)) + offset;
+                    break;
             }
+            return new Color(Mathf.Clamp(res.r, 0, 1), Mathf.Clamp(res.g, 0, 1), Mathf.Clamp(res.b, 0, 1), Mathf.Clamp(res.a, 0, 1));
         }
 
         public Color AverageColor()
@@ -42,20 +46,24 @@ namespace CGOI
             }
 
             Color offset = new Color((min.r + max.r) / 2f, (min.g + max.g) / 2f, (min.b + max.b) / 2f, (min.a + max.a) / 2f);
+            Color res;
             switch (interpolation)
             {
                 case ColorInterpolationType.Linear:
-                    return Color.Lerp(min, max, 0.5f);
+                    res = Color.Lerp(a, b, 0.5f) + offset;
+                    break;
                 default: // SquareRoot
-                    return GetSquareRootInterpolated(0.5f);
+                    res = GetSquareRootInterpolated(0.5f) + offset;
+                    break;
             }
+            return new Color(Mathf.Clamp(res.r, 0, 1), Mathf.Clamp(res.g, 0, 1), Mathf.Clamp(res.b, 0, 1), Mathf.Clamp(res.a, 0, 1));
         }
 
         Color GetSquareRootInterpolated(float i)
         {
-            Color minRoot = new Color(Mathf.Sqrt(min.r), Mathf.Sqrt(min.g), Mathf.Sqrt(min.b), squareRootAlpha ? Mathf.Sqrt(min.a) : min.a);
-            Color maxRoot = new Color(Mathf.Sqrt(max.r), Mathf.Sqrt(max.g), Mathf.Sqrt(max.b), squareRootAlpha ? Mathf.Sqrt(max.a) : min.a);
-            Color resRoot = Color.Lerp(minRoot, maxRoot, i);
+            Color aRoot = new Color(Mathf.Sqrt(a.r), Mathf.Sqrt(a.g), Mathf.Sqrt(a.b), squareRootAlpha ? Mathf.Sqrt(a.a) : a.a);
+            Color bRoot = new Color(Mathf.Sqrt(b.r), Mathf.Sqrt(b.g), Mathf.Sqrt(b.b), squareRootAlpha ? Mathf.Sqrt(b.a) : b.a);
+            Color resRoot = Color.Lerp(aRoot, bRoot, i);
             return new Color(resRoot.r * resRoot.r, resRoot.g * resRoot.g, resRoot.b * resRoot.b, squareRootAlpha ? (resRoot.a * resRoot.a) : resRoot.a);
         }
 
