@@ -1,7 +1,7 @@
 # RimWorld Mod: ColorGenerator_OptionsInterpolated
 RimWorld mod adding a new color generator, "_OptionsInterpolated", for use in XML modding. Functions similarly to the vanilla color generator "_Options", but is able to generate a random color interpolated between a pair of other colors. 
 
-Doesn't add any new gameplay features outside of those realized by other mods utilizing it.
+Doesn't add any new gameplay features outside of those realized by other mods using it.
 
 ## Tags
 The color generator is supplied a list of color options under it's ``<options>`` tag. Each color option can contain the following tags:
